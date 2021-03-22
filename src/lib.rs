@@ -19,9 +19,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-pub use crate::reader::read;
+pub use crate::tcx::read;
 
-mod reader;
 mod tcx;
 
 #[cfg(test)]
@@ -30,6 +29,6 @@ mod tests {
     fn it_works() {
         let file = std::fs::File::open("tests/20210119_run_garmin_fenix6.tcx").unwrap();
         let mut reader = std::io::BufReader::new(file);
-        let _result = crate::reader::read(&mut reader);
+        let _result = crate::tcx::read(&mut reader);
     }
 }

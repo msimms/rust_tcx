@@ -20,6 +20,8 @@
 // SOFTWARE.
 
 use serde_derive::{Deserialize};
+use std::io::Read;
+use std::io::BufReader;
 extern crate serde;
 extern crate serde_xml_rs;
 
@@ -42,13 +44,13 @@ pub struct Lap {
     #[serde(rename="DistanceMeters")]
     pub distance_meters: f64,
     #[serde(rename="MaximumSpeed")]
-    pub maximum_speed: f64,
+    pub maximum_speed: Option<f64>,
     #[serde(rename="Calories")]
-    pub calories: f64,
+    pub calories: Option<f64>,
     #[serde(rename="AverageHeartRate")]
-    pub average_heart_rate: f64,
+    pub average_heart_rate: Option<f64>,
     #[serde(rename="MaximumHeartRate")]
-    pub maximum_heart_rate: f64,
+    pub maximum_heart_rate: Option<f64>,
     #[serde(rename="Track")]
     pub tracks: Vec<Track>,
 }
@@ -64,7 +66,18 @@ pub struct Activity {
 }
 
 #[derive(Deserialize, Debug, Default)]
-pub struct Tcx {
+pub struct TrainingCenterDatabase {
     #[serde(rename="Activity")]
     pub activities: Vec<Activity>,
+}
+
+#[derive(Deserialize, Debug, Default)]
+pub struct Tcx {
+    #[serde(rename="TrainingCenterDatabase")]
+    pub training_center_database: TrainingCenterDatabase,
+}
+
+pub fn read<R: Read>(reader: &mut BufReader<R>) -> Tcx {
+    let tcx: Tcx = serde_xml_rs::from_reader(reader).unwrap();
+    tcx
 }
