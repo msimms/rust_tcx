@@ -30,6 +30,6 @@ mod tests {
     fn it_works() {
         let file = std::fs::File::open("tests/20210119_run_garmin_fenix6.tcx").unwrap();
         let mut reader = std::io::BufReader::new(file);
-        let result = crate::reader::read(&mut reader);
+        let _result = crate::reader::read(&mut reader);
     }
 }

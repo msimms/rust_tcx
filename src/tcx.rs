@@ -19,35 +19,52 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#[derive(Default)]
+use serde_derive::{Deserialize};
+extern crate serde;
+extern crate serde_xml_rs;
+
+#[derive(Deserialize, Debug, Default)]
 pub struct Trackpoint {
+    #[serde(rename="Time")]
     pub time: u64,
 }
 
-#[derive(Default)]
+#[derive(Deserialize, Debug, Default)]
 pub struct Track {
+    #[serde(rename="Trackpoint")]
     pub trackpoints: Vec<Trackpoint>,
 }
 
-#[derive(Default)]
+#[derive(Deserialize, Debug, Default)]
 pub struct Lap {
+    #[serde(rename="TotalTimeSeconds")]
     pub total_time_seconds: f64,
+    #[serde(rename="DistanceMeters")]
     pub distance_meters: f64,
+    #[serde(rename="MaximumSpeed")]
     pub maximum_speed: f64,
+    #[serde(rename="Calories")]
     pub calories: f64,
+    #[serde(rename="AverageHeartRate")]
     pub average_heart_rate: f64,
+    #[serde(rename="MaximumHeartRate")]
     pub maximum_heart_rate: f64,
+    #[serde(rename="Track")]
     pub tracks: Vec<Track>,
 }
 
-#[derive(Default)]
+#[derive(Deserialize, Debug, Default)]
 pub struct Activity {
+    #[serde(rename="Sport")]
     pub sport: String,
+    #[serde(rename="Id")]
     pub id: String,
+    #[serde(rename="Lap")]
     pub laps: Vec<Lap>,
 }
 
-#[derive(Default)]
+#[derive(Deserialize, Debug, Default)]
 pub struct Tcx {
+    #[serde(rename="Activity")]
     pub activities: Vec<Activity>,
 }

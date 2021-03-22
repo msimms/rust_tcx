@@ -19,23 +19,11 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-use xml::reader::{EventReader, XmlEvent};
 use std::io::BufReader;
 use std::io::Read;
 
-pub fn read<R: Read>(reader: &mut BufReader<R>) {
-    let parser = EventReader::new(reader);
+extern crate serde;
 
-    for e in parser {
-        match e {
-            Ok(XmlEvent::StartElement { name, .. }) => {
-            }
-            Ok(XmlEvent::EndElement { name }) => {
-            }
-            Err(e) => {
-                break;
-            }
-            _ => {}
-        }
-    }
+pub fn read<R: Read>(reader: &mut BufReader<R>) {
+//    serde_xml_rs::from_reader(reader);
 }
