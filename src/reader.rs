@@ -19,17 +19,23 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-pub use crate::reader::read;
+use xml::reader::{EventReader, XmlEvent};
+use std::io::BufReader;
+use std::io::Read;
 
-mod reader;
-mod tcx;
+pub fn read<R: Read>(reader: &mut BufReader<R>) {
+    let parser = EventReader::new(reader);
 
-#[cfg(test)]
-mod tests {
-    #[test]
-    fn it_works() {
-        let file = std::fs::File::open("tests/20210119_run_garmin_fenix6.tcx").unwrap();
-        let mut reader = std::io::BufReader::new(file);
-        let result = crate::reader::read(&mut reader);
+    for e in parser {
+        match e {
+            Ok(XmlEvent::StartElement { name, .. }) => {
+            }
+            Ok(XmlEvent::EndElement { name }) => {
+            }
+            Err(e) => {
+                break;
+            }
+            _ => {}
+        }
     }
 }

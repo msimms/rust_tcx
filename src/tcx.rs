@@ -19,17 +19,35 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-pub use crate::reader::read;
+#[derive(Default)]
+pub struct Trackpoint {
+    pub time: u64,
+}
 
-mod reader;
-mod tcx;
+#[derive(Default)]
+pub struct Track {
+    pub trackpoints: Vec<Trackpoint>,
+}
 
-#[cfg(test)]
-mod tests {
-    #[test]
-    fn it_works() {
-        let file = std::fs::File::open("tests/20210119_run_garmin_fenix6.tcx").unwrap();
-        let mut reader = std::io::BufReader::new(file);
-        let result = crate::reader::read(&mut reader);
-    }
+#[derive(Default)]
+pub struct Lap {
+    pub total_time_seconds: f64,
+    pub distance_meters: f64,
+    pub maximum_speed: f64,
+    pub calories: f64,
+    pub average_heart_rate: f64,
+    pub maximum_heart_rate: f64,
+    pub tracks: Vec<Track>,
+}
+
+#[derive(Default)]
+pub struct Activity {
+    pub sport: String,
+    pub id: String,
+    pub laps: Vec<Lap>,
+}
+
+#[derive(Default)]
+pub struct Tcx {
+    pub activities: Vec<Activity>,
 }
