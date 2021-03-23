@@ -1,5 +1,5 @@
 [package]
-name = "rust_tcx"
+name = "tcx"
 description = "Reads TCX (Garmin Training Center Database XML) files"
 license = "MIT"
 version = "0.9.0"
