@@ -22,13 +22,38 @@
 use serde_derive::{Deserialize};
 use std::io::Read;
 use std::io::BufReader;
+use chrono::{DateTime, Utc};
+
+extern crate chrono;
 extern crate serde;
 extern crate serde_xml_rs;
 
 #[derive(Deserialize, Debug, Default)]
+pub struct HeartRate {
+    #[serde(rename="Value")]
+    pub value: f64,
+}
+
+#[derive(Deserialize, Debug, Default)]
+pub struct Position {
+    #[serde(rename="LatitudeDegrees")]
+    pub latitude: f64,
+    #[serde(rename="LongitudeDegrees")]
+    pub longitude: f64,
+}
+
+#[derive(Deserialize, Debug)]
 pub struct Trackpoint {
     #[serde(rename="Time")]
-    pub time: u64,
+    pub time: DateTime<Utc>,
+    #[serde(rename="Position")]
+    pub position: Position,
+    #[serde(rename="AltitudeMeters")]
+    pub altitude_meters: f64,
+    #[serde(rename="DistanceMeters")]
+    pub distance_meters: f64,
+    #[serde(rename="HeartRateBpm")]
+    pub heart_rate: Option<HeartRate>,
 }
 
 #[derive(Deserialize, Debug, Default)]
@@ -66,18 +91,18 @@ pub struct Activity {
 }
 
 #[derive(Deserialize, Debug, Default)]
-pub struct TrainingCenterDatabase {
+pub struct Activities {
     #[serde(rename="Activity")]
     pub activities: Vec<Activity>,
 }
 
 #[derive(Deserialize, Debug, Default)]
-pub struct Tcx {
-    #[serde(rename="TrainingCenterDatabase")]
-    pub training_center_database: TrainingCenterDatabase,
+pub struct TrainingCenterDatabase {
+    #[serde(rename="Activities")]
+    pub activities: Activities,
 }
 
-pub fn read<R: Read>(reader: &mut BufReader<R>) -> Tcx {
-    let tcx: Tcx = serde_xml_rs::from_reader(reader).unwrap();
+pub fn read<R: Read>(reader: &mut BufReader<R>) -> TrainingCenterDatabase {
+    let tcx: TrainingCenterDatabase = serde_xml_rs::from_reader(reader).unwrap();
     tcx
 }

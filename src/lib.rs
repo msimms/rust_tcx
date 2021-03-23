@@ -26,7 +26,7 @@ mod tcx;
 #[cfg(test)]
 mod tests {
     #[test]
-    fn it_works() {
+    fn file1() {
         let file = std::fs::File::open("tests/20210119_run_garmin_fenix6.tcx").unwrap();
         let mut reader = std::io::BufReader::new(file);
         let _result = crate::tcx::read(&mut reader);
