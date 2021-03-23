@@ -26,7 +26,7 @@ mod tcx;
 #[cfg(test)]
 mod tests {
     #[test]
-    fn file1() {
+    fn file1_run() {
         let file = std::fs::File::open("tests/20210119_run_garmin_fenix6.tcx").unwrap();
         let mut reader = std::io::BufReader::new(file);
         let result = crate::tcx::read(&mut reader);
@@ -49,7 +49,7 @@ mod tests {
     }
 
     #[test]
-    fn file2() {
+    fn file2_ride_with_power() {
         let file = std::fs::File::open("tests/20210308_virtual_ride_with_power.tcx").unwrap();
         let mut reader = std::io::BufReader::new(file);
         let result = crate::tcx::read(&mut reader);
@@ -66,5 +66,24 @@ mod tests {
         // Correct number of tracks?
         assert_eq!(lap.tracks.len(), 1);
         let track = &lap.tracks[0];
+
+        // Correct number of trackpoints?
+        assert_eq!(track.trackpoints.len(), 1434);
+    }
+
+    #[test]
+    fn file3_yoga() {
+        let file = std::fs::File::open("tests/20210323_yoga.tcx").unwrap();
+        let mut reader = std::io::BufReader::new(file);
+        let result = crate::tcx::read(&mut reader);
+        let activities = result.activities.unwrap();
+
+        // Correct number of activities?
+        assert_eq!(activities.activities.len(), 1);
+        let activity = &activities.activities[0];
+
+        // Correct number of laps?
+        assert_eq!(activity.laps.len(), 1);
+        let lap = &activity.laps[0];
     }
 }

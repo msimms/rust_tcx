@@ -28,6 +28,23 @@ extern crate chrono;
 extern crate serde;
 extern crate serde_xml_rs;
 
+#[derive(Deserialize, Debug)]
+pub enum Intensity
+{
+    Active,
+    Resting
+}
+
+#[derive(Deserialize, Debug)]
+pub enum TriggerMethod
+{
+    Manual,
+    Distance,
+    Location,
+    Time,
+    HeartRate
+}
+
 #[derive(Deserialize, Debug, Default)]
 pub struct HeartRate {
     #[serde(rename="Value")]
@@ -47,11 +64,11 @@ pub struct Trackpoint {
     #[serde(rename="Time")]
     pub time: DateTime<Utc>,
     #[serde(rename="Position")]
-    pub position: Position,
+    pub position: Option<Position>,
     #[serde(rename="AltitudeMeters")]
-    pub altitude_meters: f64,
+    pub altitude_meters: Option<f64>,
     #[serde(rename="DistanceMeters")]
-    pub distance_meters: f64,
+    pub distance_meters: Option<f64>,
     #[serde(rename="HeartRateBpm")]
     pub heart_rate: Option<HeartRate>,
 }
@@ -71,13 +88,23 @@ pub struct Lap {
     #[serde(rename="MaximumSpeed")]
     pub maximum_speed: Option<f64>,
     #[serde(rename="Calories")]
-    pub calories: Option<f64>,
+    pub calories: Option<u16>,
     #[serde(rename="AverageHeartRate")]
     pub average_heart_rate: Option<f64>,
     #[serde(rename="MaximumHeartRate")]
     pub maximum_heart_rate: Option<f64>,
+    #[serde(rename="Intensity")]
+    pub intensity: Option<Intensity>,
+    #[serde(rename="Cadence")]
+    pub cadence: Option<u8>,
+    #[serde(rename="TriggerMethod")]
+    pub trigger_method: Option<TriggerMethod>,
     #[serde(rename="Track")]
     pub tracks: Vec<Track>,
+    #[serde(rename="Notes")]
+    pub notes: Option<String>,
+    #[serde(rename="Extensions")]
+    pub extensions: Option<Extensions>,
 }
 
 #[derive(Deserialize, Debug, Default)]
@@ -88,6 +115,10 @@ pub struct Activity {
     pub id: String,
     #[serde(rename="Lap")]
     pub laps: Vec<Lap>,
+    #[serde(rename="Notes")]
+    pub notes: Option<String>,
+    #[serde(rename="Extensions")]
+    pub extensions: Option<Extensions>,
 }
 
 #[derive(Deserialize, Debug, Default)]

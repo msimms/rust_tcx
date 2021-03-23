@@ -1,5 +1,5 @@
 # tcx
-TCX parser written in Rust
+Training Center XML (TCX) parser written in Rust. It builds on Rust's serde deserialization framework.
 
 ## Example
 ```rust
