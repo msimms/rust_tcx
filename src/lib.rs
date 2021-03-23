@@ -84,6 +84,6 @@ mod tests {
 
         // Correct number of laps?
         assert_eq!(activity.laps.len(), 1);
-        let lap = &activity.laps[0];
+        let _lap = &activity.laps[0];
     }
 }
