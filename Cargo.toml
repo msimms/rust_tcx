@@ -2,14 +2,13 @@
 name = "rust_tcx"
 description = "Reads TCX (Garmin Training Center Database XML) files"
 license = "MIT"
-version = "0.1.0"
+version = "0.9.0"
 authors = ["Mike Simms <msimms01@gmail.com>"]
 repository = "https://github.com/msimms/rust_tcx"
 edition = "2018"
 
 [dependencies]
 chrono = { version = "*", features = ["serde"]}
-geo-types = "*"
 serde_derive = "1.0"
 serde = "1.0"
 serde-xml-rs = "0.4.0"

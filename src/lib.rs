@@ -29,6 +29,42 @@ mod tests {
     fn file1() {
         let file = std::fs::File::open("tests/20210119_run_garmin_fenix6.tcx").unwrap();
         let mut reader = std::io::BufReader::new(file);
-        let _result = crate::tcx::read(&mut reader);
+        let result = crate::tcx::read(&mut reader);
+        let activities = result.activities.unwrap();
+
+        // Correct number of activities?
+        assert_eq!(activities.activities.len(), 1);
+        let activity = &activities.activities[0];
+
+        // Correct number of laps?
+        assert_eq!(activity.laps.len(), 1);
+        let lap = &activity.laps[0];
+
+        // Correct number of tracks?
+        assert_eq!(lap.tracks.len(), 1);
+        let track = &lap.tracks[0];
+
+        // Correct number of trackpoints?
+        assert_eq!(track.trackpoints.len(), 1232);
+    }
+
+    #[test]
+    fn file2() {
+        let file = std::fs::File::open("tests/20210308_virtual_ride_with_power.tcx").unwrap();
+        let mut reader = std::io::BufReader::new(file);
+        let result = crate::tcx::read(&mut reader);
+        let activities = result.activities.unwrap();
+
+        // Correct number of activities?
+        assert_eq!(activities.activities.len(), 1);
+        let activity = &activities.activities[0];
+
+        // Correct number of laps?
+        assert_eq!(activity.laps.len(), 1);
+        let lap = &activity.laps[0];
+
+        // Correct number of tracks?
+        assert_eq!(lap.tracks.len(), 1);
+        let track = &lap.tracks[0];
     }
 }

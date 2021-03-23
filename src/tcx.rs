@@ -97,9 +97,41 @@ pub struct Activities {
 }
 
 #[derive(Deserialize, Debug, Default)]
+pub struct History {
+}
+
+#[derive(Deserialize, Debug, Default)]
+pub struct Workouts {
+}
+
+#[derive(Deserialize, Debug, Default)]
+pub struct Courses {
+}
+
+#[derive(Deserialize, Debug, Default)]
+pub struct Extensions {
+}
+
+#[derive(Deserialize, Debug, Default)]
+pub struct Folders {
+    #[serde(rename="History")]
+    pub history: Option<History>,
+    #[serde(rename="Workouts")]
+    pub workouts: Option<Workouts>,
+    #[serde(rename="Courses")]
+    pub courses: Option<Courses>,
+}
+
+#[derive(Deserialize, Debug, Default)]
 pub struct TrainingCenterDatabase {
     #[serde(rename="Activities")]
-    pub activities: Activities,
+    pub activities: Option<Activities>,
+    #[serde(rename="Folders")]
+    pub folders: Option<Folders>,
+    #[serde(rename="Courses")]
+    pub courses: Option<Courses>,
+    #[serde(rename="Extensions")]
+    pub extensions: Option<Extensions>,
 }
 
 pub fn read<R: Read>(reader: &mut BufReader<R>) -> TrainingCenterDatabase {
