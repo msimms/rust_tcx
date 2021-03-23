@@ -1,7 +1,7 @@
-# rust_tcx
+# tcx
 TCX parser written in Rust
 
-# Example
+## Example
 ```rust
 extern crate tcx;
 
@@ -15,8 +15,8 @@ fn main() {
 }
 ```
 
-# Current Status
+## Current Status
 This is a work-in-progress.
 
-# License
+## License
 This project is licensed under the [MIT license](./LICENSE).
