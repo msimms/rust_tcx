@@ -2,6 +2,8 @@
 name = "tcx"
 description = "Reads TCX (Garmin Training Center Database XML) files"
 license = "MIT"
+readme = "README.md" 
+keywords = ["tcx"] 
 version = "0.9.0"
 authors = ["Mike Simms <msimms01@gmail.com>"]
 repository = "https://github.com/msimms/rust_tcx"
