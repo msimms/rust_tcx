@@ -30,6 +30,7 @@ fn main() {
 This is a work-in-progress.
 
 ## Revision History
+0.9.1 - Added ability to read speed and power data from the extensions field, also flushed out more structures from the specification.
 0.9.0 - Initial release. Successfully parsed a few example files from Garmin Connect, but does not yet implement the entire specification.
 
 ## License
