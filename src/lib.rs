@@ -69,6 +69,19 @@ mod tests {
 
         // Correct number of trackpoints?
         assert_eq!(track.trackpoints.len(), 1434);
+        let first_trackpoint = &track.trackpoints[0];
+
+        // Cadence?
+        let cadence = first_trackpoint.cadence.unwrap();
+        assert_eq!(cadence, 87);
+
+        // Get the extension.
+        let extensions = first_trackpoint.extensions.as_ref().unwrap();
+
+        // Get the first power reading.
+        let tpx = extensions.tpx.as_ref().unwrap();
+        let watts = tpx.watts.unwrap();
+        assert_eq!(watts, 216);
     }
 
     #[test]

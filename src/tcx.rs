@@ -45,6 +45,148 @@ pub enum TriggerMethod
     HeartRate
 }
 
+#[derive(Deserialize, Debug)]
+pub enum CoursePointType
+{
+    Generic,
+    Summit,
+    Valley,
+    Water,
+    Food,
+    Danger,
+    Left,
+    Right,
+    Straight,
+    FirstAid,
+    FourthCategory,
+    ThirdCategory,
+    SecondCategory,
+    FirstCategory,
+    HorsCategory,
+    Sprint
+}
+
+#[derive(Deserialize, Debug)]
+pub enum BuildType
+{
+    Interval,
+    Alpha,
+    Beta,
+    Release
+}
+
+#[derive(Deserialize, Debug)]
+pub enum SpeedType
+{
+    Pace,
+    Speed
+}
+
+#[derive(Deserialize, Debug, Default)]
+pub struct Version {
+    #[serde(rename="VersionMajor")]
+    pub version_major: u16,
+    #[serde(rename="VersionMinor")]
+    pub version_minor: u16,
+    #[serde(rename="BuildMajor")]
+    pub build_major: Option<u16>,
+    #[serde(rename="BuildMinor")]
+    pub build_minor: Option<u16>,
+}
+
+#[derive(Deserialize, Debug, Default)]
+pub struct AbstractSource {
+}
+
+#[derive(Deserialize, Debug, Default)]
+pub struct NameKeyReference {
+}
+
+#[derive(Deserialize, Debug, Default)]
+pub struct Courses {
+}
+
+#[derive(Deserialize, Debug, Default)]
+pub struct CourseFolder
+{
+    #[serde(rename="Folder")]
+    pub folder: Box<Option<CourseFolder>>,
+    #[serde(rename="Notes")]
+    pub notes: Option<String>,
+    #[serde(rename="CourseNameRef")]
+    pub course_name_ref: Option<NameKeyReference>,
+    #[serde(rename="Extensions")]
+    pub extensions: Option<Extensions>,
+}
+
+#[derive(Deserialize, Debug, Default)]
+pub struct Course
+{
+    #[serde(rename="CourseLap")]
+    pub lap: Option<CourseLap>,
+    #[serde(rename="Track")]
+    pub tracks: Option<Vec<Track>>,
+    #[serde(rename="Notes")]
+    pub notes: Option<String>,
+    #[serde(rename="CoursePoint")]
+    pub course_point: Option<CoursePoint>,
+    #[serde(rename="Creator")]
+    pub creator: Option<AbstractSource>,
+    #[serde(rename="Extensions")]
+    pub extensions: Option<Extensions>,
+}
+
+#[derive(Deserialize, Debug, Default)]
+pub struct CourseLap
+{
+    #[serde(rename="TotalTimeSeconds")]
+    pub total_time_seconds: f64,
+    #[serde(rename="DistanceMeters")]
+    pub distance_meters: f64,
+    #[serde(rename="BeginPosition")]
+    pub begin_position: Option<Position>,
+    #[serde(rename="BeginAltitudeMeters")]
+    pub begin_altitude_meters: Option<f64>,
+    #[serde(rename="EndPosition")]
+    pub end_position: Option<Position>,
+    #[serde(rename="EndAltitudeMeters")]
+    pub end_altitude_meters: f64,
+    #[serde(rename="AverageHeartRateBpm")]
+    pub average_heart_rate: Option<f64>,
+    #[serde(rename="MaximumHeartRate")]
+    pub maximum_heart_rate: Option<f64>,
+    #[serde(rename="Intensity")]
+    pub intensity: Option<Intensity>,
+    #[serde(rename="Cadence")]
+    pub cadence: Option<u8>,
+    #[serde(rename="Extensions")]
+    pub extensions: Option<Extensions>,
+}
+
+#[derive(Deserialize, Debug, Default)]
+pub struct CoursePointName
+{
+    pub token: u8,
+}
+
+#[derive(Deserialize, Debug)]
+pub struct CoursePoint {
+    #[serde(rename="Name")]
+    pub name: Option<CoursePointName>,
+    #[serde(rename="Time")]
+    pub time: DateTime<Utc>,
+    #[serde(rename="Position")]
+    pub position: Option<Position>,
+    #[serde(rename="AltitudeMeters")]
+    pub altitude_meters: Option<f64>,
+    #[serde(rename="PointType")]
+    pub point_type: Option<CoursePointType>,
+    #[serde(rename="Notes")]
+    pub notes: Option<String>,
+    #[serde(rename="Extensions")]
+    pub extensions: Option<Extensions>,
+}
+
 #[derive(Deserialize, Debug, Default)]
 pub struct HeartRate {
     #[serde(rename="Value")]
@@ -71,6 +213,10 @@ pub struct Trackpoint {
     pub distance_meters: Option<f64>,
     #[serde(rename="HeartRateBpm")]
     pub heart_rate: Option<HeartRate>,
+    #[serde(rename="Cadence")]
+    pub cadence: Option<u8>,
+    #[serde(rename="Extensions")]
+    pub extensions: Option<Extensions>,
 }
 
 #[derive(Deserialize, Debug, Default)]
@@ -80,7 +226,7 @@ pub struct Track {
 }
 
 #[derive(Deserialize, Debug, Default)]
-pub struct Lap {
+pub struct ActivityLap {
     #[serde(rename="TotalTimeSeconds")]
     pub total_time_seconds: f64,
     #[serde(rename="DistanceMeters")]
@@ -88,7 +234,7 @@ pub struct Lap {
     #[serde(rename="MaximumSpeed")]
     pub maximum_speed: Option<f64>,
     #[serde(rename="Calories")]
-    pub calories: Option<u16>,
+    pub calories: u16,
     #[serde(rename="AverageHeartRate")]
     pub average_heart_rate: Option<f64>,
     #[serde(rename="MaximumHeartRate")]
@@ -114,7 +260,7 @@ pub struct Activity {
     #[serde(rename="Id")]
     pub id: String,
     #[serde(rename="Lap")]
-    pub laps: Vec<Lap>,
+    pub laps: Vec<ActivityLap>,
     #[serde(rename="Notes")]
     pub notes: Option<String>,
     #[serde(rename="Extensions")]
@@ -136,11 +282,17 @@ pub struct Workouts {
 }
 
 #[derive(Deserialize, Debug, Default)]
-pub struct Courses {
+pub struct Ns3Tpx {
+    #[serde(rename="Speed")]
+    pub speed: Option<f64>,
+    #[serde(rename="Watts")]
+    pub watts: Option<u16>,
 }
 
 #[derive(Deserialize, Debug, Default)]
 pub struct Extensions {
+    #[serde(rename="TPX")]
+    pub tpx: Option<Ns3Tpx>,
 }
 
 #[derive(Deserialize, Debug, Default)]
