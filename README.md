@@ -27,7 +27,7 @@ fn main() {
 ```
 
 ## Current Status
-This is a work-in-progress.
+It is currently able to parse several example TCX files, specifically ones for running and cycling activities, but does not implement the entire specification.
 
 ## Revision History
 * 0.9.1 - Added ability to read speed and power data from the extensions field, also flushed out more structures from the specification.
