@@ -317,7 +317,7 @@ pub struct TrainingCenterDatabase {
     pub extensions: Option<Extensions>,
 }
 
-pub fn read<R: Read>(reader: &mut BufReader<R>) -> TrainingCenterDatabase {
-    let tcx: TrainingCenterDatabase = serde_xml_rs::from_reader(reader).unwrap();
+pub fn read<R: Read>(reader: &mut BufReader<R>) -> Result<TrainingCenterDatabase, serde_xml_rs::Error> {
+    let tcx = serde_xml_rs::from_reader(reader);
     tcx
 }

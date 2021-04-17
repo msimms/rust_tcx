@@ -29,7 +29,7 @@ mod tests {
     fn file1_run() {
         let file = std::fs::File::open("tests/20210119_run_garmin_fenix6.tcx").unwrap();
         let mut reader = std::io::BufReader::new(file);
-        let result = crate::tcx::read(&mut reader);
+        let result = crate::tcx::read(&mut reader).unwrap();
         let activities = result.activities.unwrap();
 
         // Correct number of activities?
@@ -52,7 +52,7 @@ mod tests {
     fn file2_ride_with_power() {
         let file = std::fs::File::open("tests/20210308_virtual_ride_with_power.tcx").unwrap();
         let mut reader = std::io::BufReader::new(file);
-        let result = crate::tcx::read(&mut reader);
+        let result = crate::tcx::read(&mut reader).unwrap();
         let activities = result.activities.unwrap();
 
         // Correct number of activities?
@@ -88,7 +88,7 @@ mod tests {
     fn file3_yoga() {
         let file = std::fs::File::open("tests/20210323_yoga.tcx").unwrap();
         let mut reader = std::io::BufReader::new(file);
-        let result = crate::tcx::read(&mut reader);
+        let result = crate::tcx::read(&mut reader).unwrap();
         let activities = result.activities.unwrap();
 
         // Correct number of activities?
