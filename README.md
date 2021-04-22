@@ -1,3 +1,5 @@
+[![crates.io](https://img.shields.io/crates/v/tcx.svg)](https://crates.io/crates/tcx)
+
 # tcx
 Training Center XML (TCX) parser written in Rust. It builds on Rust's serde deserialization framework.
 
