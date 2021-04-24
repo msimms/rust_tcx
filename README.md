@@ -1,7 +1,7 @@
 [![crates.io](https://img.shields.io/crates/v/tcx.svg)](https://crates.io/crates/tcx)
 
 # tcx
-Training Center XML (TCX) parser written in Rust. It builds on Rust's serde deserialization framework.
+Training Center XML (TCX) parser written in Rust. TCX is an XML-based file format that is used for exchanging fitness tracking information from runs, bike rides, etc. It builds on Rust's serde deserialization framework.
 
 ## Example
 ```rust
