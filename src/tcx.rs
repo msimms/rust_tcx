@@ -104,6 +104,10 @@ pub struct NameKeyReference {
 
 #[derive(Deserialize, Debug, Default)]
 pub struct Courses {
+    #[serde(rename="CourseFolder")]
+    pub folder: Option<CourseFolder>,
+    #[serde(rename="Extensions")]
+    pub extensions: Option<Extensions>,
 }
 
 #[derive(Deserialize, Debug, Default)]
