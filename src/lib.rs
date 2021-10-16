@@ -99,7 +99,7 @@ mod tests {
     #[test]
     fn file3_yoga() {
         let result =
-            crate::tcx::TrainingCenterDatabase::from_file("tests/20210323_yoga.tcx").unwrap();
+            crate::tcx::read_file("tests/20210323_yoga.tcx").unwrap();
         let activities = result.activities.unwrap();
 
         // Correct number of activities?
