@@ -7,10 +7,10 @@
 // to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
-// 
+//
 // The above copyright notice and this permission notice shall be included in all
 // copies or substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 // FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -19,9 +19,13 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-pub use crate::tcx::read;
+//! Training Center XML (TCX) parser written in Rust.
+//! TCX is an XML-based file format that is used for exchanging fitness tracking
+//! information from runs, bike rides, etc.
+//! This crate builds on Rust's serde deserialization framework.
 
-mod tcx;
+pub use crate::tcx::*;
+pub mod tcx;
 
 #[cfg(test)]
 mod tests {
@@ -29,9 +33,14 @@ mod tests {
     fn file1_run() {
         let file = std::fs::File::open("tests/20210119_run_garmin_fenix6.tcx").unwrap();
         let mut reader = std::io::BufReader::new(file);
-        let result = crate::tcx::read(&mut reader).unwrap();
-        let activities = result.activities.unwrap();
+        let mut result = crate::tcx::read(&mut reader).unwrap();
 
+        result.calc_heartrates();
+        result
+            .export_json("tests/20210119_run_garmin_fenix6.json")
+            .expect("Unable to export tests/20210119_run_garmin_fenix6.json.");
+
+        let activities = result.activities.unwrap();
         // Correct number of activities?
         assert_eq!(activities.activities.len(), 1);
         let activity = &activities.activities[0];
@@ -46,13 +55,16 @@ mod tests {
 
         // Correct number of trackpoints?
         assert_eq!(track.trackpoints.len(), 1232);
+
+        // Export
     }
 
     #[test]
     fn file2_ride_with_power() {
-        let file = std::fs::File::open("tests/20210308_virtual_ride_with_power.tcx").unwrap();
-        let mut reader = std::io::BufReader::new(file);
-        let result = crate::tcx::read(&mut reader).unwrap();
+        let result = crate::tcx::TrainingCenterDatabase::from_file(
+            &mut "tests/20210308_virtual_ride_with_power.tcx",
+        )
+        .unwrap();
         let activities = result.activities.unwrap();
 
         // Correct number of activities?
@@ -86,9 +98,8 @@ mod tests {
 
     #[test]
     fn file3_yoga() {
-        let file = std::fs::File::open("tests/20210323_yoga.tcx").unwrap();
-        let mut reader = std::io::BufReader::new(file);
-        let result = crate::tcx::read(&mut reader).unwrap();
+        let result =
+            crate::tcx::read_file("tests/20210323_yoga.tcx").unwrap();
         let activities = result.activities.unwrap();
 
         // Correct number of activities?
